@@ -1,0 +1,105 @@
+# ==============================
+# FastAPI Backend
+# ==============================
+fastapi
+uvicorn
+python-multipart
+pydantic
+pydantic-settings
+
+# ==============================
+# Database - PostgreSQL
+# ==============================
+sqlalchemy
+psycopg2-binary
+alembic
+
+# ==============================
+# Authentication & Security
+# ==============================
+python-jose
+passlib
+bcrypt==4.3.0
+email-validator
+
+# ==============================
+# AI / Qwen2.5-VL
+# ==============================
+torch
+torchvision
+transformers
+accelerate
+safetensors
+sentencepiece
+protobuf
+bitsandbytes
+
+# ==============================
+# Image Processing
+# ==============================
+Pillow
+opencv-python
+numpy
+
+# ==============================
+# OCR
+# ==============================
+pytesseract
+
+# ==============================
+# Object Detection
+# ==============================
+ultralytics
+
+# ==============================
+# Document Processing
+# ==============================
+PyMuPDF
+python-docx
+python-pptx
+openpyxl
+pandas
+
+# ==============================
+# HTML / Markdown / Text
+# ==============================
+beautifulsoup4
+markdown
+
+# ==============================
+# Celery / RabbitMQ / Redis
+# ==============================
+celery
+redis
+kombu
+
+# ==============================
+# HTTP / External Services
+# ==============================
+httpx
+requests
+
+# ==============================
+# Configuration
+# ==============================
+python-dotenv
+
+# ==============================
+# Logging / Monitoring
+# ==============================
+structlog
+
+# ==============================
+# Testing
+# ==============================
+pytest
+pytest-asyncio
+pytest-mock
+httpx
+
+# ==============================
+# Code Quality
+# ==============================
+black
+isort
+flake8
