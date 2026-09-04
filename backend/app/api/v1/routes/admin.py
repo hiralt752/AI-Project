@@ -7,9 +7,11 @@ from app.services.admin_service import (
     get_user_admin_service,
     update_user_admin_service,
     delete_user_admin_service,
-    get_all_users_admin_service
+    get_all_users_admin_service,
 )
 from app.schema.auth import UpdateUserRequest, UserResponse
+from app.schema.file import AdminFileResponse
+from app.services.admin_file_service import get_all_files_admin_service, get_file_admin_service, delete_file_admin_service, get_user_files_admin_service
 
 
 router = APIRouter(
@@ -83,6 +85,62 @@ def delete_user_admin(
     ),
 ):
     return delete_user_admin_service(
+        db=db,
+        user_id=user_id,
+    )
+
+@router.get(
+    "/files",
+    response_model=list[AdminFileResponse],
+)
+def get_all_admin_files(
+    db: Session = Depends(get_db),
+    current_user=Depends(require_role("Admin")),
+):
+    return get_all_files_admin_service(
+        db=db,
+    )
+
+
+@router.get(
+    "/files/{file_id}",
+    response_model=AdminFileResponse,
+)
+def get_admin_file(
+    file_id: int,
+    db: Session = Depends(get_db),
+    current_user=Depends(require_role("Admin")),
+):
+    return get_file_admin_service(
+        db=db,
+        file_id=file_id,
+    )
+
+
+@router.delete(
+    "/files/{file_id}",
+    status_code=status.HTTP_200_OK,
+)
+def delete_admin_file(
+    file_id: int,
+    db: Session = Depends(get_db),
+    current_user=Depends(require_role("Admin")),
+):
+    return delete_file_admin_service(
+        db=db,
+        file_id=file_id,
+    )
+
+@router.get(
+    "/users/{user_id}/files",
+    response_model=list[AdminFileResponse],
+)
+def get_admin_user_files(
+    user_id: int,
+    db: Session = Depends(get_db),
+    current_user=Depends(require_role("Admin")),
+):
+    return get_user_files_admin_service(
         db=db,
         user_id=user_id,
     )

@@ -1,2 +1,4 @@
 .env
 myvenv
+storage
+__pycache__
