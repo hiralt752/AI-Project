@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from app.models.user import User
 
 
-def get_user_by_id(
+def get_user_by_id_admin(
     db: Session,
     user_id: int,
 ):
@@ -15,7 +15,8 @@ def get_user_by_id(
         )
     )
 
-def update_user(
+
+def update_user_admin(
     db: Session,
     user: User,
     name: str | None = None,
@@ -33,7 +34,7 @@ def update_user(
     return user
 
 
-def soft_delete_user(
+def delete_user_admin(
     db: Session,
     user: User,
 ):
@@ -43,3 +44,10 @@ def soft_delete_user(
     db.refresh(user)
 
     return user
+
+def get_all_users_admin(db: Session):
+    return db.scalars(
+        select(User).where(
+            User.is_deleted == False
+        )
+    ).all()
