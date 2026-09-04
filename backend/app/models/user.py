@@ -35,13 +35,6 @@ class User(Base, TimestampMixin, SoftDeleteMixin):
         index=True,
     )
 
-    username: Mapped[str | None] = mapped_column(
-        String(100),
-        unique=True,
-        nullable=True,
-        index=True,
-    )
-
     password_hash: Mapped[str] = mapped_column(
         String(255),
         nullable=False,
@@ -54,7 +47,7 @@ class User(Base, TimestampMixin, SoftDeleteMixin):
     )
 
     role_id: Mapped[int] = mapped_column(
-        ForeignKey("roles.id"),
+       ForeignKey("roles.id"),
         nullable=False,
         index=True,
     )
@@ -68,3 +61,8 @@ class User(Base, TimestampMixin, SoftDeleteMixin):
         "Role",
         back_populates="users",
     )
+
+    refresh_tokens = relationship(
+    "RefreshToken",
+    back_populates="user",
+)

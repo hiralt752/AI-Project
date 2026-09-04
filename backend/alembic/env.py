@@ -1,5 +1,5 @@
 from app.database.connection import Base
-from app.models import analysis_task,audit_log,base,document_analysis,file,image_analysis,permission,role,role_permission,user
+from app.models import analysis_task,audit_log,base,document_analysis,file,image_analysis,permission,role,role_permission,user,refresh_token
 
 import os
 from dotenv import load_dotenv
