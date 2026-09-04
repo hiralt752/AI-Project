@@ -99,6 +99,7 @@ def refresh(
 def logout(
     request: RefreshTokenRequest,
     db: Session = Depends(get_db),
+    current_user: RegisterRequest = Depends(get_current_user)
 ):
     return logout_user(
         db=db,
