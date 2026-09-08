@@ -38,6 +38,16 @@ class ImageAnalysis(Base, SoftDeleteMixin):
         nullable=True,
     )
 
+    ocr_confidence: Mapped[float | None] = mapped_column(
+        Float,
+        nullable=True,
+    )
+
+    ocr_word_count: Mapped[int | None] = mapped_column(
+        Integer,
+        nullable=True,
+    )
+
     detected_objects: Mapped[list | None] = mapped_column(
         JSON,
         nullable=True,
