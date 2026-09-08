@@ -103,3 +103,4 @@ httpx
 black
 isort
 flake8
+dashscope
