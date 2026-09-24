@@ -198,8 +198,6 @@ class DocumentPipelineService:
 
             "key_points": key_points,
 
-            "section_summaries": [],
-
             "entities": entities,
 
             "decisions": decisions,

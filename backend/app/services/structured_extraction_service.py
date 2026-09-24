@@ -181,7 +181,7 @@ DOCUMENT TEXT:
                 self.model,
                 self.processor,
                 prompt,
-                max_new_tokens=1024,
+                max_new_tokens=1536,
             )
 
             print("\n" + "=" * 80)
@@ -215,7 +215,8 @@ DOCUMENT TEXT:
 
         Markdown code fences are removed before parsing. If the
         complete response is not valid JSON, the method attempts
-        to extract a JSON object from the response.
+        to extract a JSON object from the response. If the JSON
+        is truncated, completed array values are recovered.
 
         Args:
             response: Raw text returned by Qwen.
@@ -223,7 +224,7 @@ DOCUMENT TEXT:
         Returns:
             Dictionary containing normalized extraction fields.
             Empty lists are returned when the response cannot
-            be parsed as valid JSON.
+            be parsed or recovered.
         """
 
         empty_result = {
@@ -281,19 +282,57 @@ DOCUMENT TEXT:
             start = response.find("{")
             end = response.rfind("}")
 
-            if start == -1 or end == -1:
-                return empty_result
+            if start != -1 and end > start:
 
-            json_text = response[
-                start:end + 1
-            ]
+                json_text = response[
+                    start:end + 1
+                ]
 
-            try:
-                data = json.loads(
-                    json_text
+                try:
+                    data = json.loads(
+                        json_text
+                    )
+
+                except json.JSONDecodeError:
+                    data = None
+
+            else:
+                data = None
+
+            # -------------------------------------------------
+            # Recover completed values from truncated JSON
+            # -------------------------------------------------
+
+            if data is None:
+
+                print(
+                    "[STRUCTURED EXTRACTION] "
+                    "Incomplete JSON detected. "
+                    "Attempting recovery..."
                 )
 
-            except json.JSONDecodeError:
+                recovered = (
+                    self._recover_truncated_json(
+                        response
+                    )
+                )
+
+                if recovered:
+                    print(
+                        "[STRUCTURED EXTRACTION] "
+                        "Recovered structured data "
+                        "from incomplete JSON."
+                    )
+
+                    return self._normalize_recovered_result(
+                        recovered
+                    )
+
+                print(
+                    "[STRUCTURED EXTRACTION] "
+                    "Unable to recover structured data."
+                )
+
                 return empty_result
 
         # -----------------------------------------------------
@@ -338,6 +377,151 @@ DOCUMENT TEXT:
             ),
             "key_points": self._clean_list(
                 key_points
+            ),
+        }
+
+    # =========================================================
+    # TRUNCATED JSON RECOVERY
+    # =========================================================
+
+    def _recover_truncated_json(
+        self,
+        response: str,
+    ) -> dict[str, list]:
+        """
+        Recover completed string values from truncated JSON.
+
+        If Qwen stops generating before the JSON is completely
+        closed, already completed array values are recovered.
+        """
+
+        recovered = {}
+
+        fields = [
+            "entities",
+            "decisions",
+            "action_items",
+            "key_points",
+        ]
+
+        for field in fields:
+
+            values = (
+                self._extract_completed_array_values(
+                    response,
+                    field,
+                )
+            )
+
+            if values:
+                recovered[field] = values
+
+        return recovered
+
+    # =========================================================
+    # ARRAY VALUE RECOVERY
+    # =========================================================
+
+    @staticmethod
+    def _extract_completed_array_values(
+        response: str,
+        field: str,
+    ) -> list:
+        """
+        Extract completed JSON string values from one array.
+
+        Only properly closed string values are returned.
+        """
+
+        pattern = (
+            rf'"{re.escape(field)}"\s*:\s*\['
+        )
+
+        match = re.search(
+            pattern,
+            response,
+            flags=re.IGNORECASE,
+        )
+
+        if not match:
+            return []
+
+        array_text = response[
+            match.end():
+        ]
+
+        values = []
+
+        # -----------------------------------------------------
+        # Find complete JSON strings only.
+        # -----------------------------------------------------
+
+        string_pattern = re.compile(
+            r'"((?:\\.|[^"\\])*)"'
+        )
+
+        for string_match in string_pattern.finditer(
+            array_text
+        ):
+
+            value = string_match.group(1)
+
+            try:
+                value = json.loads(
+                    '"' + value + '"'
+                )
+
+            except json.JSONDecodeError:
+                continue
+
+            value = value.strip()
+
+            if not value:
+                continue
+
+            if value not in values:
+                values.append(
+                    value
+                )
+
+        return values
+
+    # =========================================================
+    # NORMALIZE RECOVERED RESULT
+    # =========================================================
+
+    def _normalize_recovered_result(
+        self,
+        data: dict[str, list],
+    ) -> dict[str, list]:
+        """
+        Normalize recovered values from truncated JSON.
+        """
+
+        return {
+            "entities": self._clean_list(
+                data.get(
+                    "entities",
+                    [],
+                )
+            ),
+            "decisions": self._clean_list(
+                data.get(
+                    "decisions",
+                    [],
+                )
+            ),
+            "action_items": self._clean_list(
+                data.get(
+                    "action_items",
+                    [],
+                )
+            ),
+            "key_points": self._clean_list(
+                data.get(
+                    "key_points",
+                    [],
+                )
             ),
         }
 
@@ -479,4 +663,3 @@ DOCUMENT TEXT:
                 )
 
         return cleaned
-
