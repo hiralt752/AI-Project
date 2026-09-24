@@ -35,10 +35,7 @@ def save_document_analysis(
             [],
         ),
 
-        section_summaries=result.get(
-            "section_summaries",
-            [],
-        ),
+        
 
         entities=result.get(
             "entities",
@@ -59,9 +56,7 @@ def save_document_analysis(
             "chunk_count"
         ),
 
-        section_count=result.get(
-            "section_count"
-        ),
+        
 
         chunk_summaries=result.get(
             "chunk_summaries",
