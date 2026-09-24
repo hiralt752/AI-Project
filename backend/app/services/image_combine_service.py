@@ -1,3 +1,5 @@
+"""Provide image combine service components for the application."""
+
 import time
 
 from fastapi import HTTPException

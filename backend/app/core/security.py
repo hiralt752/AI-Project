@@ -1,3 +1,5 @@
+"""Provide security components for the application."""
+
 from datetime import datetime, timedelta, timezone
 
 from jose import JWTError, jwt
@@ -21,6 +23,8 @@ pwd_context = CryptContext(
 
 
 def hash_password(password: str) -> str:
+    """Hash password."""
+
     return pwd_context.hash(password)
 
 
@@ -28,6 +32,8 @@ def verify_password(
     plain_password: str,
     hashed_password: str,
 ) -> bool:
+    """Verify password."""
+
     return pwd_context.verify(
         plain_password,
         hashed_password,
@@ -39,6 +45,8 @@ def create_access_token(
     email: str,
     role_id: int,
 ) -> str:
+
+    """Create access token."""
 
     expire = datetime.now(timezone.utc) + timedelta(
         minutes=int(os.getenv("JWT_ACCESS_TOKEN_EXPIRE_MINUTES"))
@@ -59,6 +67,8 @@ def create_access_token(
 
 
 def get_refresh_token_expiry():
+    """Get refresh token expiry."""
+
     expire_days = int(
         os.getenv(
             "JWT_REFRESH_TOKEN_EXPIRE_DAYS",
@@ -73,6 +83,8 @@ def get_refresh_token_expiry():
 def create_refresh_token(user_id: int,  expires_at: datetime) -> str:
 
     # expire = get_refresh_token_expiry()
+
+    """Create refresh token."""
 
     payload = {
         "sub": str(user_id),
@@ -96,6 +108,8 @@ def decode_refresh_token(
     refresh_token: str,
 ) -> dict:
 
+    """Decode refresh token."""
+
     try:
         payload = jwt.decode(
             refresh_token,
@@ -115,6 +129,8 @@ def decode_refresh_token(
 
 
 def hash_refresh_token(token: str) -> str:
+    """Hash refresh token."""
+
     return hashlib.sha256(
         token.encode("utf-8")
     ).hexdigest()
@@ -124,6 +140,8 @@ def hash_refresh_token(token: str) -> str:
 def create_password_reset_token(
     user_id: int,
 ) -> str:
+
+    """Create password reset token."""
 
     expire = datetime.now(
         timezone.utc
@@ -156,6 +174,8 @@ def decode_password_reset_token(
     token: str,
 ) -> dict:
 
+    """Decode password reset token."""
+
     try:
         payload = jwt.decode(
             token,
@@ -181,6 +201,8 @@ def decode_password_reset_token(
         )
 
 def verify_token(token: str, credentials_exception, db: Session):
+    """Verify token."""
+
     try:
         payload = jwt.decode(
             token,

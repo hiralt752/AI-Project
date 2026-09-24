@@ -1,3 +1,5 @@
+"""Provide role permission components for the application."""
+
 from sqlalchemy import (
     Integer,
     ForeignKey,
@@ -10,6 +12,8 @@ from app.models.base import SoftDeleteMixin
 
 
 class RolePermission(Base, SoftDeleteMixin):
+
+    """Represent the RolePermission database model."""
 
     __tablename__ = "role_permissions"
 

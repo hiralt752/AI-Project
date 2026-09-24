@@ -1,3 +1,5 @@
+"""Provide image description service components for the application."""
+
 
 import time
 from pathlib import Path
@@ -28,6 +30,8 @@ def analyze_image(
         "actions, colors, and any visible text."
     ),
 ):
+    """Analyze image."""
+
     start_time = time.time()
 
     # Preprocess image
@@ -63,6 +67,8 @@ def describe_uploaded_image_service(
     processor,
 ):
     # 1. Get uploaded file belonging to current user
+    """Describe uploaded image service."""
+
     file = get_user_file_by_id(
         db=db,
         file_id=file_id,

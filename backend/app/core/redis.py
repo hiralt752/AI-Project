@@ -1,3 +1,5 @@
+"""Provide redis components for the application."""
+
 import os
 
 import redis

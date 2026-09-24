@@ -1,3 +1,5 @@
+"""Provide image processing service components for the application."""
+
 from pathlib import Path
 
 from app.utils.image_processing import (
@@ -17,6 +19,8 @@ from app.utils.image_processing import (
 
 def preprocess_image(image_path: str | Path) -> dict:
     
+    """Preprocess an image for analysis."""
+
     image = load_image(image_path)
 
     

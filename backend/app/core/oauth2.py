@@ -1,3 +1,5 @@
+"""Provide oauth2 components for the application."""
+
 from fastapi.security import OAuth2PasswordBearer
 from fastapi import Depends, HTTPException, status
 from  app.core.security import verify_token
@@ -7,6 +9,8 @@ from app.database.connection import get_db
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/auth/login")
 
 def get_current_user(token: str = Depends(oauth2_scheme), db:Session=Depends(get_db)):
+    """Get current user."""
+
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",

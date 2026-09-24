@@ -1,3 +1,5 @@
+"""Provide admin components for the application."""
+
 from fastapi import APIRouter, Depends,status
 from sqlalchemy.orm import Session
 
@@ -25,6 +27,8 @@ def admin_dashboard(
         require_role("Admin")
     ),
 ):
+    """Admin dashboard."""
+
     return {
         "message": "Welcome to Admin Dashboard",
         "admin_id": current_user.id,
@@ -36,6 +40,8 @@ def get_all_users_admin(
     db: Session = Depends(get_db),
     current_user=Depends(require_role("Admin")),
 ):
+    """Get all users admin."""
+
     return get_all_users_admin_service(db)
 
 @router.get(
@@ -49,6 +55,8 @@ def get_user_admin(
         require_role("Admin")
     ),
 ):
+    """Get user admin."""
+
     return get_user_admin_service(
         db=db,
         user_id=user_id,
@@ -66,6 +74,8 @@ def update_user_admin(
         require_role("Admin")
     ),
 ):
+    """Update user admin."""
+
     return update_user_admin_service(
         db=db,
         user_id=user_id,
@@ -84,6 +94,8 @@ def delete_user_admin(
         require_role("Admin")
     ),
 ):
+    """Delete user admin."""
+
     return delete_user_admin_service(
         db=db,
         user_id=user_id,
@@ -97,6 +109,8 @@ def get_all_admin_files(
     db: Session = Depends(get_db),
     current_user=Depends(require_role("Admin")),
 ):
+    """Get all admin files."""
+
     return get_all_files_admin_service(
         db=db,
     )
@@ -111,6 +125,8 @@ def get_admin_file(
     db: Session = Depends(get_db),
     current_user=Depends(require_role("Admin")),
 ):
+    """Get admin file."""
+
     return get_file_admin_service(
         db=db,
         file_id=file_id,
@@ -126,6 +142,8 @@ def delete_admin_file(
     db: Session = Depends(get_db),
     current_user=Depends(require_role("Admin")),
 ):
+    """Delete a file as an administrator."""
+
     return delete_file_admin_service(
         db=db,
         file_id=file_id,
@@ -140,6 +158,8 @@ def get_admin_user_files(
     db: Session = Depends(get_db),
     current_user=Depends(require_role("Admin")),
 ):
+    """Get admin user files."""
+
     return get_user_files_admin_service(
         db=db,
         user_id=user_id,

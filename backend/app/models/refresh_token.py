@@ -1,3 +1,5 @@
+"""Provide refresh token components for the application."""
+
 from datetime import datetime
 
 from sqlalchemy import Boolean, DateTime, ForeignKey, String
@@ -8,6 +10,8 @@ from app.models.base import SoftDeleteMixin
 
 
 class RefreshToken(Base, SoftDeleteMixin):
+
+    """Represent the RefreshToken database model."""
 
     __tablename__ = "refresh_tokens"
 

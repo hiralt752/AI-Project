@@ -1,3 +1,5 @@
+"""Provide refresh token repository components for the application."""
+
 from datetime import datetime
 
 from sqlalchemy import select
@@ -12,6 +14,8 @@ def create_refresh_token_record(
     token_hash: str,
     expires_at: datetime,
 ):
+    """Create refresh token record."""
+
     refresh_token = RefreshToken(
         user_id=user_id,
         token_hash=token_hash,
@@ -30,6 +34,8 @@ def get_refresh_token_by_hash(
     db: Session,
     token_hash: str,
 ):
+    """Get refresh token by hash."""
+
     return db.scalar(
         select(RefreshToken).where(
             RefreshToken.token_hash == token_hash,
@@ -43,6 +49,8 @@ def revoke_refresh_token(
     db: Session,
     refresh_token: RefreshToken,
 ):
+    """Revoke refresh token."""
+
     refresh_token.revoked = True
 
     db.commit()

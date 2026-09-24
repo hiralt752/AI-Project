@@ -1,3 +1,5 @@
+"""Provide role components for the application."""
+
 from sqlalchemy import String, Integer
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -6,6 +8,8 @@ from app.models.base import SoftDeleteMixin
 
 
 class Role(Base, SoftDeleteMixin):
+
+    """Represent the Role database model."""
 
     __tablename__ = "roles"
 

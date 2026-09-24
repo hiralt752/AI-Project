@@ -1,3 +1,5 @@
+"""Provide image analysis components for the application."""
+
 from sqlalchemy import (
     String,
     Integer,
@@ -13,6 +15,8 @@ from app.models.base import SoftDeleteMixin
 
 
 class ImageAnalysis(Base, SoftDeleteMixin):
+
+    """Represent the ImageAnalysis database model."""
 
     __tablename__ = "image_analyses"
 

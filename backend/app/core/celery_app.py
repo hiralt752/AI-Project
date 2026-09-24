@@ -1,3 +1,5 @@
+"""Provide celery app components for the application."""
+
 import os
 
 from celery import Celery

@@ -1,8 +1,12 @@
+"""Provide file components for the application."""
+
 from datetime import datetime
 from pydantic import BaseModel
 
 
 class FileUploadResponse(BaseModel):
+    """Define the FileUploadResponse API schema."""
+
     id: int
     file_name: str
     file_type: str
@@ -17,6 +21,8 @@ class FileUploadResponse(BaseModel):
     }
 
 class AdminFileResponse(BaseModel):
+    """Define the AdminFileResponse API schema."""
+
     id: int
     owner_id: int
     file_name: str

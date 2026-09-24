@@ -1,3 +1,5 @@
+"""Provide auth service components for the application."""
+
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 from datetime import datetime, timezone
@@ -36,6 +38,8 @@ def register_user(
     email: str,
     password: str,
 ):
+
+    """Register user."""
 
     existing_user = get_user_by_email(
         db,
@@ -76,6 +80,8 @@ def login_user(
     email: str,
     password: str,
 ):
+
+    """Login user."""
 
     user = get_user_by_email(
         db,
@@ -148,6 +154,8 @@ def refresh_access_token(
     refresh_token: str
 ):
     # 1. Decode refresh token
+    """Refresh access token."""
+
     try:
         payload = decode_refresh_token(
             refresh_token
@@ -228,6 +236,8 @@ def logout_user(
     refresh_token: str,
 ):
     # 1. Validate refresh token
+    """Logout user."""
+
     try:
         decode_refresh_token(
             refresh_token
@@ -272,6 +282,8 @@ def forgot_password(
     db: Session,
     email: str,
 ):
+    """Forgot password."""
+
     user = get_user_by_email(
         db,
         email,
@@ -308,6 +320,8 @@ def reset_password(
     new_password: str,
 ):
     # 1. Validate reset token
+    """Reset password."""
+
     try:
         payload = decode_password_reset_token(
             token

@@ -1,3 +1,5 @@
+"""Provide auth components for the application."""
+
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
 from fastapi.security import OAuth2PasswordRequestForm
@@ -53,6 +55,8 @@ def register(
     db: Session = Depends(get_db),
 ):
 
+    """Register."""
+
     user = register_user(
         db=db,
         name=request.name,
@@ -74,6 +78,8 @@ def login(
     db: Session = Depends(get_db),
 ):
 
+    """Login."""
+
     return login_user(
         db=db,
         email=form_data.username,
@@ -89,6 +95,8 @@ def refresh(
     db: Session = Depends(get_db),
 ):
 
+    """Refresh."""
+
     return refresh_access_token(
         db=db,
         refresh_token=request.refresh_token,
@@ -101,6 +109,8 @@ def logout(
     db: Session = Depends(get_db),
     current_user: RegisterRequest = Depends(get_current_user)
 ):
+    """Logout."""
+
     return logout_user(
         db=db,
         refresh_token=request.refresh_token,
@@ -112,8 +122,10 @@ def logout(
 def forgot_password_route(
     request: ForgotPasswordRequest,
     db: Session = Depends(get_db),
-    current_user: RegisterRequest = Depends(get_current_user)
+    #current_user: RegisterRequest = Depends(get_current_user)
 ):
+    """Forgot password route."""
+
     return forgot_password(
         db=db,
         email=request.email,
@@ -125,6 +137,8 @@ def reset_password_route(
     request: ResetPasswordRequest,
     db: Session = Depends(get_db),
 ):
+    """Reset password route."""
+
     return reset_password(
         db=db,
         token=request.token,
@@ -138,6 +152,8 @@ def reset_password_route(
 def get_me(
     current_user=Depends(get_current_user),
 ):
+    """Get me."""
+
     return current_user
 
 @router.patch(
@@ -150,6 +166,8 @@ def update_user(
     db: Session = Depends(get_db),
     current_user=Depends(get_current_user),
 ):
+    """Update user."""
+
     check_user_access(
     current_user,
     user_id,
@@ -169,6 +187,8 @@ def delete_user(
     db: Session = Depends(get_db),
     current_user=Depends(get_current_user),
 ):
+    """Delete user."""
+
     check_user_access(
         current_user,
         user_id,

@@ -1,3 +1,5 @@
+"""Provide document tasks components for the application."""
+
 import time
 
 from celery.exceptions import MaxRetriesExceededError
@@ -23,6 +25,8 @@ def document_processing_task(
     file_id: int,
     user_id: int,
 ):
+    """Document processing task."""
+
     db = SessionLocal()
     start_time = time.time()
 

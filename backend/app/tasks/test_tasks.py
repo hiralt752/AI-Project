@@ -1,3 +1,5 @@
+"""Provide test tasks components for the application."""
+
 from app.core.celery_app import celery_app
 from app.tasks.task_handlers import handle_task_failure
 
@@ -7,6 +9,8 @@ from app.tasks.task_handlers import handle_task_failure
     name="app.tasks.test_tasks.test_task",
 )
 def test_task(self, message: str = "Celery is working"):
+    """Test task."""
+
     try:
         print(f"Test task started | id={self.request.id}")
 

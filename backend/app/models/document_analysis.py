@@ -1,3 +1,5 @@
+"""Provide document analysis components for the application."""
+
 from sqlalchemy import (
     String,
     Integer,
@@ -13,6 +15,8 @@ from app.models.base import SoftDeleteMixin
 
 
 class DocumentAnalysis(Base, SoftDeleteMixin):
+
+    """Represent the DocumentAnalysis database model."""
 
     __tablename__ = "document_analyses"
 
@@ -30,7 +34,7 @@ class DocumentAnalysis(Base, SoftDeleteMixin):
 
     summary_mode: Mapped[str] = mapped_column(
         String(50),
-        default="standard",
+        default="Standard",
         nullable=False,
     )
 
@@ -44,10 +48,6 @@ class DocumentAnalysis(Base, SoftDeleteMixin):
         nullable=True,
     )
 
-    section_summaries: Mapped[list | None] = mapped_column(
-        JSON,
-        nullable=True,
-    )
 
     entities: Mapped[list | None] = mapped_column(
         JSON,
@@ -55,6 +55,23 @@ class DocumentAnalysis(Base, SoftDeleteMixin):
     )
 
     action_items: Mapped[list | None] = mapped_column(
+        JSON,
+        nullable=True,
+    )
+
+    decisions: Mapped[list | None] = mapped_column(
+        JSON,
+        nullable=True,
+    )
+
+    chunk_count: Mapped[int | None] = mapped_column(
+        Integer,
+        nullable=True,
+    )
+
+    
+
+    chunk_summaries: Mapped[list | None] = mapped_column(
         JSON,
         nullable=True,
     )
