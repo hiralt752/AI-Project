@@ -1,3 +1,5 @@
+"""Provide user service components for the application."""
+
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 
@@ -14,6 +16,8 @@ def update_user_service(
     name: str | None = None,
     email: str | None = None,
 ):
+    """Update user service."""
+
     user = get_user_by_id(
         db,
         user_id,
@@ -38,6 +42,8 @@ def delete_user_service(
     db: Session,
     user_id: int,
 ):
+    """Delete user service."""
+
     user = get_user_by_id(
         db,
         user_id,
@@ -62,6 +68,8 @@ def check_user_access(
     current_user,
     target_user_id: int,
 ):
+    """Check user access."""
+
     if (
         current_user.id != target_user_id
         and current_user.role.name != "Admin"

@@ -1,3 +1,5 @@
+"""Provide authorization components for the application."""
+
 from fastapi import Depends, HTTPException, status
 
 from app.core.oauth2 import get_current_user
@@ -5,9 +7,13 @@ from app.core.oauth2 import get_current_user
 
 def require_role(required_role: str):
 
+    """Require role."""
+
     def role_checker(
         current_user=Depends(get_current_user),
     ):
+        """Role checker."""
+
         if not current_user.role:
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,

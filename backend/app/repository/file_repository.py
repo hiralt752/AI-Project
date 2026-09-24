@@ -1,3 +1,5 @@
+"""Provide file repository components for the application."""
+
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
@@ -13,6 +15,8 @@ def create_file(
     storage_reference: str,
     checksum: str,
 ):
+
+    """Create file."""
 
     file_record = File(
         owner_id=owner_id,
@@ -36,6 +40,8 @@ def get_user_file_by_id(
     file_id: int,
     owner_id: int,
 ):
+    """Get user file by id."""
+
     return db.scalar(
         select(File).where(
             File.id == file_id,
@@ -49,6 +55,8 @@ def get_user_files(
     db: Session,
     owner_id: int,
 ):
+    """Get user files."""
+
     return db.scalars(
         select(File)
         .where(
@@ -63,6 +71,8 @@ def soft_delete_file(
     db: Session,
     file: File,
 ):
+
+    """Soft delete file."""
 
     file.is_deleted = True
     file.retention_status = "deleted"

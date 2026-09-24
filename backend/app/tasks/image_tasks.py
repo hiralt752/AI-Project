@@ -1,3 +1,5 @@
+"""Provide image tasks components for the application."""
+
 import time
 from PIL import Image
 
@@ -30,6 +32,8 @@ def image_description_task(
     file_id: int,
     user_id: int,
 ):
+    """Image description task."""
+
     db = SessionLocal()
 
     try:
@@ -215,6 +219,8 @@ def ocr_task(
     file_id: int,
     user_id: int,
 ):
+    """Ocr task."""
+
     db = SessionLocal()
 
     try:

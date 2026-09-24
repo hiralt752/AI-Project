@@ -1,3 +1,5 @@
+"""Provide seed roles permissions components for the application."""
+
 import os
 
 from sqlalchemy import select
@@ -49,6 +51,8 @@ ADMIN_USER = {
 
 
 def seed_roles():
+    """Seed roles."""
+
     db = SessionLocal()
 
     try:
@@ -78,6 +82,8 @@ def seed_roles():
 
 
 def seed_permissions():
+    """Seed permissions."""
+
     db = SessionLocal()
 
     try:
@@ -107,6 +113,8 @@ def seed_permissions():
 
 
 def seed_role_permissions():
+    """Seed role permissions."""
+
     db = SessionLocal()
 
     try:
@@ -182,6 +190,8 @@ def seed_role_permissions():
 
 
 def seed_admin_user():
+    """Seed admin user."""
+
     db = SessionLocal()
 
     try:
@@ -231,6 +241,8 @@ def seed_admin_user():
 
 
 def main():
+    """Main."""
+
     print("Starting seed...")
 
     seed_roles()

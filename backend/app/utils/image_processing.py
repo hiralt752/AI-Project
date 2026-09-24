@@ -1,3 +1,5 @@
+"""Provide image processing components for the application."""
+
 from pathlib import Path
 
 import cv2

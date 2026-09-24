@@ -1,3 +1,5 @@
+"""Provide analysis task components for the application."""
+
 from datetime import datetime
 
 from sqlalchemy import (
@@ -14,6 +16,8 @@ from app.models.base import SoftDeleteMixin
 
 
 class AnalysisTask(Base, SoftDeleteMixin):
+
+    """Represent the AnalysisTask database model."""
 
     __tablename__ = "analysis_tasks"
 

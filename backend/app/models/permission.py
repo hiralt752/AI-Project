@@ -1,3 +1,5 @@
+"""Provide permission components for the application."""
+
 from sqlalchemy import String, Integer
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -6,6 +8,8 @@ from app.models.base import SoftDeleteMixin
 
 
 class Permission(Base, SoftDeleteMixin):
+
+    """Represent the Permission database model."""
 
     __tablename__ = "permissions"
 

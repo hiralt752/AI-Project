@@ -1,3 +1,5 @@
+"""Provide image analysis repository components for the application."""
+
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
@@ -16,6 +18,8 @@ def create_image_analysis(
     processing_time: float | None = None,
     warnings: list | None = None,
 ):
+    """Create image analysis."""
+
     image_analysis = ImageAnalysis(
         file_id=file_id,
         description=description,
@@ -39,6 +43,8 @@ def get_image_analysis_by_file_id(
     db: Session,
     file_id: int,
 ):
+    """Get image analysis by file id."""
+
     return db.scalar(
         select(ImageAnalysis).where(
             ImageAnalysis.file_id == file_id,
@@ -59,6 +65,8 @@ def update_image_analysis(
     processing_time: float | None = None,
     warnings: list | None = None,
 ):
+    """Update image analysis."""
+
     if description is not None:
         image_analysis.description = description
 

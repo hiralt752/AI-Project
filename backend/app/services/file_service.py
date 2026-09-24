@@ -1,3 +1,5 @@
+"""Provide file service components for the application."""
+
 from fastapi import HTTPException, UploadFile
 from sqlalchemy.orm import Session
 
@@ -20,8 +22,6 @@ from app.utils.file_storage import (
     UPLOAD_STORAGE
 )
 
-from fastapi import HTTPException
-from pathlib import Path
 
 
 async def upload_file_service(
@@ -29,6 +29,8 @@ async def upload_file_service(
     file: UploadFile,
     owner_id: int,
 ):
+
+    """Upload file service."""
 
     if not file.filename:
         raise HTTPException(
@@ -103,6 +105,8 @@ def get_user_files_service(
     db: Session,
     owner_id: int,
 ):
+    """Get user files service."""
+
     return get_user_files(
         db=db,
         owner_id=owner_id,
@@ -114,6 +118,8 @@ def delete_file_service(
     owner_id: int,
 ):
     # 1. Find file belonging to current user
+    """Delete file service."""
+
     file = get_user_file_by_id(
         db=db,
         file_id=file_id,

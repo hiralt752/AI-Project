@@ -1,47 +1,111 @@
-import time
 
-from app.services.qwen_service import load_qwen_model
-from app.services.image_description_service import analyze_image
-
-
-print("Starting complete image analysis test...")
-
-# Load model
-start_time = time.time()
-
-model, processor = load_qwen_model()
-
-load_time = time.time() - start_time
-
-print(f"Model loading time: {load_time:.2f} seconds")
+from app.services.document_service import process_document
+from app.services.document_pipeline_service import DocumentPipelineService
 
 
-# Analyze image
-print("\nStarting image preprocessing + Qwen analysis...")
-
-result = analyze_image(
-    model=model,
-    processor=processor,
-    image_path="storage/uploads/801f5f93-a9ef-47a3-a541-2df1a1bae406.png",
-)
+FILE_PATH = r"C:/Users/itidol/Downloads/AIML_documentation.pdf"
 
 
-# Display result
-print("\n========== RESULT ==========")
+def main():
 
-print("\nDescription:")
-print(result["description"])
+    # -----------------------------------------
+    # 1. Extract document
+    # -----------------------------------------
 
-print("\nResolution valid:")
-print(result["resolution_valid"])
+    document = process_document(FILE_PATH)
 
-print("\nQuality:")
-print(result["quality"])
+    print("\n========== EXTRACTION ==========")
+    print("File type:", document.get("file_type"))
+    print("Page count:", document.get("page_count"))
+    print("Text length:", len(document.get("text", "")))
 
-print("\nBlur:")
-print(result["blur"])
 
-print("\nProcessing time:")
-print(f"{result['processing_time']:.2f} seconds")
+    # -----------------------------------------
+    # 2. Create pipeline
+    # -----------------------------------------
 
-print("============================")
+    pipeline = DocumentPipelineService()
+
+
+    # -----------------------------------------
+    # 3. Process document
+    # -----------------------------------------
+
+    result = pipeline.process(
+        document=document,
+        summary_mode="Standard",
+        extract_structured=True,
+    )
+
+
+    # -----------------------------------------
+    # 4. Display result
+    # -----------------------------------------
+
+    print("\n========== SUMMARY RESULT DEBUG ==========")
+    print("Summary:", result.get("summary"))
+    print("Chunk summaries:", result.get("chunk_summaries"))
+    print("Chunk summaries type:", type(result.get("chunk_summaries")))
+    print("Chunk summaries count:", len(result.get("chunk_summaries", [])))
+
+    print("\n========== SUMMARY ==========")
+    print(result["summary"])
+
+
+    print("\n========== SUMMARY MODE ==========")
+    print(result["summary_mode"])
+
+
+    print("\n========== CHUNK COUNT ==========")
+    print(result["chunk_count"])
+
+
+    print("\n========== SECTION COUNT ==========")
+    print(result["section_count"])
+
+
+    print("\n========== CHUNK SUMMARIES ==========")
+
+    for index, summary in enumerate(
+        result["chunk_summaries"],
+        start=1,
+    ):
+        print(f"\n--- Chunk {index} ---")
+        print(summary)
+
+
+    print("\n========== STRUCTURED DATA ==========")
+
+    structured = result["structured_data"]
+
+    print("\nRAW:")
+    print(structured)
+
+    print("\nEntities:")
+    print(structured.get("entities", []))
+
+    print("\nDates:")
+    print(structured.get("dates", []))
+
+    print("\nNumbers:")
+    print(structured.get("numbers", []))
+
+    print("\nDecisions:")
+    print(structured.get("decisions", []))
+
+    print("\nAction Items:")
+    print(structured.get("action_items", []))
+
+    print("\nKey Points:")
+    print(structured.get("key_points", []))
+
+    print("\nSection Summaries:")
+    print(structured.get("section_summaries", []))
+
+
+    print("\n========== PROCESSING TIME ==========")
+    print(result["processing_time"], "seconds")
+
+
+if __name__ == "__main__":
+    main()

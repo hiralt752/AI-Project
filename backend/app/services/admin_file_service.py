@@ -1,3 +1,5 @@
+"""Provide admin file service components for the application."""
+
 from pathlib import Path
 
 from fastapi import HTTPException
@@ -16,6 +18,8 @@ from app.utils.file_storage import UPLOAD_STORAGE
 def get_all_files_admin_service(
     db: Session,
 ):
+    """Get all files admin service."""
+
     return get_all_files(
         db=db,
     )
@@ -25,6 +29,8 @@ def get_file_admin_service(
     db: Session,
     file_id: int,
 ):
+    """Get file admin service."""
+
     file = get_file_by_id_admin(
         db=db,
         file_id=file_id,
@@ -42,6 +48,8 @@ def get_user_files_admin_service(
     db: Session,
     user_id: int,
 ):
+    """Get user files admin service."""
+
     return get_user_files_admin(
         db=db,
         user_id=user_id,
@@ -52,6 +60,8 @@ def delete_file_admin_service(
     file_id: int,
 ):
     # Find file
+    """Delete file admin service."""
+
     file = get_file_by_id_admin(
         db=db,
         file_id=file_id,

@@ -1,3 +1,5 @@
+"""Provide ocr components for the application."""
+
 
 import cv2
 import numpy as np
@@ -106,6 +108,8 @@ def create_ocr_variants(
     image: Image.Image,
 ) -> list[np.ndarray]:
 
+    """Create ocr variants."""
+
     gray = preprocess_image(image)
 
     variants = []
@@ -145,6 +149,8 @@ def run_tesseract(
     language: str = "eng",
     psm: int = 6,
 ) -> dict:
+
+    """Run tesseract."""
 
     config = (
         f"--oem 3 --psm {psm}"
@@ -210,6 +216,8 @@ def run_tesseract(
 def calculate_result_score(
     result: dict,
 ) -> float:
+
+    """Calculate result score."""
 
     text = result["text"]
     confidence = result["confidence"]

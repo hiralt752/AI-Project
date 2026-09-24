@@ -1,3 +1,5 @@
+"""Provide task handlers components for the application."""
+
 import logging
 
 
@@ -9,6 +11,8 @@ def handle_task_failure(
     task_id: str,
     error: str,
 ):
+    """Handle task failure."""
+
     logger.error(
         "Task failed | "
         "name=%s | "

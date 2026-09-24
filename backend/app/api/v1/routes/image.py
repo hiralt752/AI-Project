@@ -1,3 +1,5 @@
+"""Provide image components for the application."""
+
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
@@ -41,6 +43,8 @@ def describe_image(
     db: Session = Depends(get_db),
     current_user=Depends(get_current_user),
 ):
+    """Describe image."""
+
     model, processor = load_qwen()
 
     return describe_uploaded_image_service(
@@ -63,6 +67,8 @@ def ocr_image(
     db: Session = Depends(get_db),
     current_user=Depends(get_current_user),
 ):
+    """Ocr image."""
+
     return perform_uploaded_image_ocr_service(
         db=db,
         file_id=file_id,
@@ -81,6 +87,8 @@ def analyze_image(
     db: Session = Depends(get_db),
     current_user=Depends(get_current_user),
 ):
+    """Analyze image."""
+
     model, processor = load_qwen()
 
     return analyze_both_service(

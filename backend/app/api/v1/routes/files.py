@@ -1,3 +1,5 @@
+"""Provide files components for the application."""
+
 from fastapi import (
     APIRouter,
     Depends,
@@ -37,6 +39,8 @@ async def upload_file(
     db: Session = Depends(get_db),
     current_user=Depends(get_current_user),
 ):
+    """Upload file."""
+
     return await upload_file_service(
         db=db,
         file=file,
@@ -52,6 +56,8 @@ def get_my_files(
     db: Session = Depends(get_db),
     current_user=Depends(get_current_user),
 ):
+    """Get my files."""
+
     return get_user_files_service(
         db=db,
         owner_id=current_user.id,
@@ -65,6 +71,8 @@ def delete_file(
     db: Session = Depends(get_db),
     current_user=Depends(get_current_user),
 ):
+    """Delete file."""
+
     return delete_file_service(
         db=db,
         file_id=file_id,

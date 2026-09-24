@@ -1,3 +1,5 @@
+"""Provide auth repository components for the application."""
+
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
@@ -9,6 +11,8 @@ def get_user_by_email(
     db: Session,
     email: str,
 ) -> User | None:
+
+    """Get user by email."""
 
     return db.scalar(
         select(User).where(
@@ -23,6 +27,8 @@ def get_user_by_id(
     user_id: int,
 ) -> User | None:
 
+    """Get user by id."""
+
     return db.scalar(
         select(User).where(
             User.id == user_id,
@@ -35,6 +41,8 @@ def get_role_by_name(
     db: Session,
     role_name: str,
 ) -> Role | None:
+
+    """Get role by name."""
 
     return db.scalar(
         select(Role).where(
@@ -51,6 +59,8 @@ def create_user(
     password_hash: str,
     role_id: int,
 ) -> User:
+
+    """Create user."""
 
     user = User(
         name=name,
@@ -71,6 +81,8 @@ def update_last_login(
     user: User,
 ) -> User:
 
+    """Update last login."""
+
     from datetime import datetime, timezone
 
     user.last_login_at = datetime.now(timezone.utc)
@@ -86,6 +98,8 @@ def update_user_password(
     user: User,
     password_hash: str,
 ) -> User:
+
+    """Update user password."""
 
     user.password_hash = password_hash
 

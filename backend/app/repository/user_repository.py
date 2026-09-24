@@ -1,3 +1,5 @@
+"""Provide user repository components for the application."""
+
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
@@ -8,6 +10,8 @@ def get_user_by_id(
     db: Session,
     user_id: int,
 ):
+    """Get user by id."""
+
     return db.scalar(
         select(User).where(
             User.id == user_id,
@@ -21,6 +25,8 @@ def update_user(
     name: str | None = None,
     email: str | None = None,
 ):
+    """Update user."""
+
     if name is not None:
         user.name = name
 
@@ -37,6 +43,8 @@ def soft_delete_user(
     db: Session,
     user: User,
 ):
+    """Soft delete user."""
+
     user.is_deleted = True
 
     db.commit()

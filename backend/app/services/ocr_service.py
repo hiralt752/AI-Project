@@ -1,3 +1,5 @@
+"""Provide ocr service components for the application."""
+
 import time
 
 from fastapi import HTTPException

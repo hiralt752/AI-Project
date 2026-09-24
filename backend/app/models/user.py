@@ -1,3 +1,5 @@
+"""Provide user components for the application."""
+
 from datetime import datetime
 
 from sqlalchemy import (
@@ -14,6 +16,8 @@ from app.models.base import TimestampMixin, SoftDeleteMixin
 
 
 class User(Base, TimestampMixin, SoftDeleteMixin):
+
+    """Represent the User database model."""
 
     __tablename__ = "users"
 

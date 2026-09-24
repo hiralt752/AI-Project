@@ -1,9 +1,13 @@
+"""Provide image components for the application."""
+
 from datetime import datetime
 
 from pydantic import BaseModel
 
 
 class ImageDescriptionResponse(BaseModel):
+    """Define the ImageDescriptionResponse API schema."""
+
     id: int
     file_id: int
     description: str | None
@@ -19,6 +23,8 @@ class ImageDescriptionResponse(BaseModel):
 
 
 class ImageOCRResponse(BaseModel):
+    """Define the ImageOCRResponse API schema."""
+
     id: int
     file_id: int
     ocr_text: str | None
@@ -35,6 +41,8 @@ class ImageOCRResponse(BaseModel):
 
 
 class ImageAnalysisResponse(BaseModel):
+    """Define the ImageAnalysisResponse API schema."""
+
     id: int
     file_id: int
     description: str | None

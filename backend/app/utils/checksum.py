@@ -1,7 +1,11 @@
+"""Provide checksum components for the application."""
+
 import hashlib
 
 
 async def calculate_sha256(file) -> str:
+
+    """Calculate the SHA-256 checksum of an uploaded file."""
 
     sha256 = hashlib.sha256()
 

@@ -1,3 +1,5 @@
+"""Provide admin file repository components for the application."""
+
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
@@ -6,6 +8,8 @@ from app.models.file import File
 def get_all_files(
     db: Session,
 ):
+    """Get all files."""
+
     return db.scalars(
         select(File)
         .where(
@@ -21,6 +25,8 @@ def get_file_by_id_admin(
     db: Session,
     file_id: int,
 ):
+    """Get file by id admin."""
+
     return db.scalar(
         select(File).where(
             File.id == file_id,
@@ -32,6 +38,8 @@ def get_user_files_admin(
     db: Session,
     user_id: int,
 ):
+    """Get user files admin."""
+
     return db.scalars(
         select(File)
         .where(
@@ -46,6 +54,8 @@ def soft_delete_file_admin(
     db: Session,
     file: File,
 ):
+    """Soft delete file admin."""
+
     file.is_deleted = True
     file.retention_status = "deleted"
 

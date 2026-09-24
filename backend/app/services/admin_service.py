@@ -1,3 +1,5 @@
+"""Provide admin service components for the application."""
+
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 
@@ -13,6 +15,8 @@ def get_user_admin_service(
     db: Session,
     user_id: int,
 ):
+    """Get user admin service."""
+
     user = get_user_by_id_admin(
         db,
         user_id,
@@ -32,6 +36,8 @@ def update_user_admin_service(
     name: str | None = None,
     email: str | None = None,
 ):
+    """Update user admin service."""
+
     user = get_user_by_id_admin(
         db,
         user_id,
@@ -54,6 +60,8 @@ def delete_user_admin_service(
     db: Session,
     user_id: int,
 ):
+    """Delete user admin service."""
+
     user = get_user_by_id_admin(
         db,
         user_id,
@@ -75,4 +83,6 @@ def delete_user_admin_service(
     }
 
 def get_all_users_admin_service(db: Session):
+    """Get all users admin service."""
+
     return get_all_users_admin(db)

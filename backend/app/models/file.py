@@ -1,3 +1,5 @@
+"""Provide file components for the application."""
+
 from sqlalchemy import (
     String,
     Integer,
@@ -11,6 +13,8 @@ from app.models.base import SoftDeleteMixin
 
 
 class File(Base, SoftDeleteMixin):
+
+    """Represent the File database model."""
 
     __tablename__ = "files"
 
